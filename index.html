@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CT312 PROJECT</title>
+</head>
+
+<body>
+    <form>
+
+        <div>
+            <label for="Area">Area</label>
+            <input type="text" value="28395" id="Area">
+        </div>
+
+        <div>
+            <label for="Perimeter">Perimeter</label>
+            <input type="text" value="610,291" id="Perimeter">
+        </div>
+
+        <div>
+            <label for="MajorAxisLength">MajorAxisLength</label>
+            <input type="text" value="208,1781167" id="MajorAxisLength">
+        </div>
+
+        <div>
+            <label for="MinorAxisLength">MinorAxisLength</label>
+            <input type="text" value="173,888747" id="MinorAxisLength">
+        </div>
+
+        <div>
+            <label for="AspectRation">AspectRation</label>
+            <input type="text" value="1,197191424" id="AspectRation">
+        </div>
+
+        <div>
+            <label for="Eccentricity">Eccentricity</label>
+            <input type="text" value="0,549812187" id="Eccentricity">
+        </div>
+
+        <div>
+            <label for="ConvexArea">ConvexArea</label>
+            <input type="text" value="28715" id="ConvexArea">
+        </div>
+
+        <div>
+            <label for="EquivDiameter">EquivDiameter</label>
+            <input type="text" value="190,1410973" id="EquivDiameter">
+        </div>
+
+        <div>
+            <label for="Extent">Extent</label>
+            <input type="text" value="0,763922518" id="Extent">
+        </div>
+
+        <div>
+            <label for="Solidity">Solidity</label>
+            <input type="text" value="0,988855999" id="Solidity">
+        </div>
+
+        <div>
+            <label for="roundness">roundness</label>
+            <input type="text" value="0,958027126" id="roundness">
+        </div>
+
+        <div>
+            <label for="Compactness">Compactness</label>
+            <input type="text" value="0,913357755" id="Compactness">
+        </div>
+
+        <div>
+            <label for="ShapeFactor1">ShapeFactor1</label>
+            <input type="text" value="0,007331506" id="ShapeFactor1">
+        </div>
+
+        <div>
+            <label for="ShapeFactor2">ShapeFactor2</label>
+            <input type="text" value="0,003147289" id="ShapeFactor2">
+        </div>
+
+        <div>
+            <label for="ShapeFactor3">ShapeFactor3</label>
+            <input type="text" value="0,834222388" id="ShapeFactor3">
+        </div>
+
+        <div>
+            <label for="ShapeFactor4">ShapeFactor4</label>
+            <input type="text" value="0,998723889" id="ShapeFactor4">
+        </div>
+        <div>
+            <input id="predictBtn" type="button" value="Dự đoán" onclick="makePrediction()">
+        </div>
+    </form>
+
+    <h2 id="result"></h2>
+    <!-- <img src="" id="image" width="400px"> -->
+
+    <script>
+        const images = {
+            'SEKER': 'https://upload.wikimedia.org/wikipedia/commons/a/a7/Irissetosa1.jpg',
+            'BARBUNYA': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Iris_virginica_2.jpg/1200px-Iris_virginica_2.jpg',
+            'BOMBAY': 'https://s3.amazonaws.com/eit-planttoolbox-prod/media/images/Iris_versicolor__flo_npyvSQOSVQ8O.jpeg',
+            'CALI': 'https://s3.amazonaws.com/eit-planttoolbox-prod/media/images/Iris_versicolor__flo_npyvSQOSVQ8O.jpeg',
+            'DERMASON': 'https://s3.amazonaws.com/eit-planttoolbox-prod/media/images/Iris_versicolor__flo_npyvSQOSVQ8O.jpeg',
+            'HOROZ': 'https://s3.amazonaws.com/eit-planttoolbox-prod/media/images/Iris_versicolor__flo_npyvSQOSVQ8O.jpeg',
+            'SIRA': 'https://s3.amazonaws.com/eit-planttoolbox-prod/media/images/Iris_versicolor__flo_npyvSQOSVQ8O.jpeg',
+        }
+
+        function makePrediction() {
+            const predictBtn = document.getElementById('predictBtn');
+            predictBtn.disabled = true;
+
+            const Area = document.getElementById('Area').value;
+            const Perimeter = document.getElementById('Perimeter').value;
+            const MajorAxisLength = document.getElementById('MajorAxisLength').value;
+            const MinorAxisLength = document.getElementById('MinorAxisLength').value;
+            const AspectRation = document.getElementById('AspectRation').value;
+            const Eccentricity = document.getElementById('Eccentricity').value;
+            const ConvexArea = document.getElementById('ConvexArea').value;
+            const EquivDiameter = document.getElementById('EquivDiameter').value;
+            const Extent = document.getElementById('Extent').value;
+            const Solidity = document.getElementById('Solidity').value;
+            const roundness = document.getElementById('roundness').value;
+            const Compactness = document.getElementById('Compactness').value;
+            const ShapeFactor1 = document.getElementById('ShapeFactor1').value;
+            const ShapeFactor2 = document.getElementById('ShapeFactor2').value;
+            const ShapeFactor3 = document.getElementById('ShapeFactor3').value;
+            const ShapeFactor4 = document.getElementById('ShapeFactor4').value;
+
+            const data = {
+                Area,
+                Perimeter,
+                MajorAxisLength,
+                MinorAxisLength,
+                AspectRation,
+                Eccentricity,
+                ConvexArea,
+                EquivDiameter,
+                Extent,
+                Solidity,
+                roundness,
+                Compactness,
+                ShapeFactor1,
+                ShapeFactor2,
+                ShapeFactor3,
+                ShapeFactor4,
+            };
+
+            // document.getElementById('image').src = ""
+
+            const url = "http://localhost:5000"
+            fetch(url + '/predict', {   
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerHTML = 'Kết quả dự đoán: ' + data.result;
+                    document.getElementById('image').src = images[data.result]
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                }).finally(() => {
+                    predictBtn.disabled = false;
+                })
+        }
+    </script>
+</body>
+
+</html>
