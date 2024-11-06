@@ -15,10 +15,10 @@ X = data[[
 y = data['Class']
 
 # Chia dữ liệu thành tập huấn luyện và kiểm tra
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.8, random_state=24)
 
-# Xây dựng mô hình KNN với k=3
-model = KNeighborsClassifier(n_neighbors=3)
+# Xây dựng mô hình KNN với k=14
+model = KNeighborsClassifier(n_neighbors=14)
 model.fit(X_train, y_train)
 
 # Dự đoán trên tập kiểm tra và tính độ chính xác
