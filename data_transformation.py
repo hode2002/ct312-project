@@ -5,7 +5,6 @@ from sklearn.preprocessing import MinMaxScaler
 """### ĐỌC DỮ LIỆU"""
 
 # 1. Đọc dữ liệu
-#data_path = "Dry_Bean_Dataset2024.xlsx"
 data_path = "https://github.com/ltdaovn/dataset/raw/master/Dry_Bean_Dataset2024.xlsx"
 data = pd.DataFrame(pd.read_excel(data_path, sheet_name='Dry_Beans_Dataset'))
 
