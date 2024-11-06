@@ -5,97 +5,229 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CT312 PROJECT</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .body {
+            background-color: #f4f4f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .input-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .input-row div {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        input[type="button"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .flex {
+            display: flex;
+        }
+        
+        .justify-center {
+            justify-content: center;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        .h-10vh {
+            height: 10vh;
+        }
+
+        .text-color-333 {
+            color: #333 !important;
+        }
+
+        .font-bold {
+            font-weight: bold;
+        }
+
+        .font-size-24 {
+            font-size: 24px;
+        }
+    </style>
 </head>
 
 <body>
-    <form>
+    <div class="body">
+        <form>
+            <div class="flex justify-center mb-20">
+                <p class="text-color-333 font-size-24 font-bold">
+                    DỰ ĐOÁN LOẠI ĐẬU
+                </p>
+            </div>
+    
+            <div class="input-row">
+                <div>
+                    <label for="Area">Area</label>
+                    <input type="text" value="28395" id="Area">
+                </div>
+    
+                <div>
+                    <label for="Perimeter">Perimeter</label>
+                    <input type="text" value="610,291" id="Perimeter">
+                </div>
+    
+                <div>
+                    <label for="MajorAxisLength">MajorAxisLength</label>
+                    <input type="text" value="208,1781167" id="MajorAxisLength">
+                </div>
+            </div>
 
-        <div>
-            <label for="Area">Area</label>
-            <input type="text" value="28395" id="Area">
-        </div>
+            <div class="input-row">
+                <div>
+                    <label for="MinorAxisLength">MinorAxisLength</label>
+                    <input type="text" value="173,888747" id="MinorAxisLength">
+                </div>
+    
+                            
+                <div>
+                    <label for="AspectRation">AspectRation</label>
+                    <input type="text" value="1,197191424" id="AspectRation">
+                </div>
+    
+                <div>
+                    <label for="Eccentricity">Eccentricity</label>
+                    <input type="text" value="0,549812187" id="Eccentricity">
+                </div>
+            </div>
+    
+            <div class="input-row">
+                <div>
+                    <label for="ConvexArea">ConvexArea</label>
+                    <input type="text" value="28715" id="ConvexArea">
+                </div>
+    
+                <div>
+                    <label for="EquivDiameter">EquivDiameter</label>
+                    <input type="text" value="190,1410973" id="EquivDiameter">
+                </div>
 
-        <div>
-            <label for="Perimeter">Perimeter</label>
-            <input type="text" value="610,291" id="Perimeter">
-        </div>
-
-        <div>
-            <label for="MajorAxisLength">MajorAxisLength</label>
-            <input type="text" value="208,1781167" id="MajorAxisLength">
-        </div>
-
-        <div>
-            <label for="MinorAxisLength">MinorAxisLength</label>
-            <input type="text" value="173,888747" id="MinorAxisLength">
-        </div>
-
-        <div>
-            <label for="AspectRation">AspectRation</label>
-            <input type="text" value="1,197191424" id="AspectRation">
-        </div>
-
-        <div>
-            <label for="Eccentricity">Eccentricity</label>
-            <input type="text" value="0,549812187" id="Eccentricity">
-        </div>
-
-        <div>
-            <label for="ConvexArea">ConvexArea</label>
-            <input type="text" value="28715" id="ConvexArea">
-        </div>
-
-        <div>
-            <label for="EquivDiameter">EquivDiameter</label>
-            <input type="text" value="190,1410973" id="EquivDiameter">
-        </div>
-
-        <div>
-            <label for="Extent">Extent</label>
-            <input type="text" value="0,763922518" id="Extent">
-        </div>
-
-        <div>
-            <label for="Solidity">Solidity</label>
-            <input type="text" value="0,988855999" id="Solidity">
-        </div>
-
-        <div>
-            <label for="roundness">roundness</label>
-            <input type="text" value="0,958027126" id="roundness">
-        </div>
-
-        <div>
-            <label for="Compactness">Compactness</label>
-            <input type="text" value="0,913357755" id="Compactness">
-        </div>
-
-        <div>
-            <label for="ShapeFactor1">ShapeFactor1</label>
-            <input type="text" value="0,007331506" id="ShapeFactor1">
-        </div>
-
-        <div>
-            <label for="ShapeFactor2">ShapeFactor2</label>
-            <input type="text" value="0,003147289" id="ShapeFactor2">
-        </div>
-
-        <div>
-            <label for="ShapeFactor3">ShapeFactor3</label>
-            <input type="text" value="0,834222388" id="ShapeFactor3">
-        </div>
-
-        <div>
-            <label for="ShapeFactor4">ShapeFactor4</label>
-            <input type="text" value="0,998723889" id="ShapeFactor4">
-        </div>
-        <div>
+                <div>
+                    <label for="Extent">Extent</label>
+                    <input type="text" value="0,763922518" id="Extent">
+                </div>
+            </div>
+    
+            <div class="input-row">
+                <div>
+                    <label for="Solidity">Solidity</label>
+                    <input type="text" value="0,988855999" id="Solidity">
+                </div>
+    
+                <div>
+                    <label for="roundness">roundness</label>
+                    <input type="text" value="0,958027126" id="roundness">
+                </div>
+    
+                <div>
+                    <label for="Compactness">Compactness</label>
+                    <input type="text" value="0,913357755" id="Compactness">
+                </div>
+            </div>
+    
+            <div class="input-row">
+                <div>
+                    <label for="ShapeFactor1">ShapeFactor1</label>
+                    <input type="text" value="0,007331506" id="ShapeFactor1">
+                </div>
+    
+                <div>
+                    <label for="ShapeFactor2">ShapeFactor2</label>
+                    <input type="text" value="0,003147289" id="ShapeFactor2">
+                </div>
+    
+                <div>
+                    <label for="ShapeFactor3">ShapeFactor3</label>
+                    <input type="text" value="0,834222388" id="ShapeFactor3">
+                </div>
+            </div>
+    
+            <div class="input-row">
+                <div>
+                    <label for="ShapeFactor4">ShapeFactor4</label>
+                    <input type="text" value="0,998723889" id="ShapeFactor4">
+                </div>
+            </div>
+    
             <input id="predictBtn" type="button" value="Dự đoán" onclick="makePrediction()">
-        </div>
-    </form>
+        </form>
+    </div>
 
-    <h2 id="result"></h2>
-    <!-- <img src="" id="image" width="400px"> -->
+    <h2 id="result" class="body h-10vh"></h2>
 
     <script>
         const images = {
@@ -106,68 +238,44 @@
             'DERMASON': 'https://s3.amazonaws.com/eit-planttoolbox-prod/media/images/Iris_versicolor__flo_npyvSQOSVQ8O.jpeg',
             'HOROZ': 'https://s3.amazonaws.com/eit-planttoolbox-prod/media/images/Iris_versicolor__flo_npyvSQOSVQ8O.jpeg',
             'SIRA': 'https://s3.amazonaws.com/eit-planttoolbox-prod/media/images/Iris_versicolor__flo_npyvSQOSVQ8O.jpeg',
-        }
+        };
 
         function makePrediction() {
             const predictBtn = document.getElementById('predictBtn');
             predictBtn.disabled = true;
 
-            const Area = document.getElementById('Area').value;
-            const Perimeter = document.getElementById('Perimeter').value;
-            const MajorAxisLength = document.getElementById('MajorAxisLength').value;
-            const MinorAxisLength = document.getElementById('MinorAxisLength').value;
-            const AspectRation = document.getElementById('AspectRation').value;
-            const Eccentricity = document.getElementById('Eccentricity').value;
-            const ConvexArea = document.getElementById('ConvexArea').value;
-            const EquivDiameter = document.getElementById('EquivDiameter').value;
-            const Extent = document.getElementById('Extent').value;
-            const Solidity = document.getElementById('Solidity').value;
-            const roundness = document.getElementById('roundness').value;
-            const Compactness = document.getElementById('Compactness').value;
-            const ShapeFactor1 = document.getElementById('ShapeFactor1').value;
-            const ShapeFactor2 = document.getElementById('ShapeFactor2').value;
-            const ShapeFactor3 = document.getElementById('ShapeFactor3').value;
-            const ShapeFactor4 = document.getElementById('ShapeFactor4').value;
-
             const data = {
-                Area,
-                Perimeter,
-                MajorAxisLength,
-                MinorAxisLength,
-                AspectRation,
-                Eccentricity,
-                ConvexArea,
-                EquivDiameter,
-                Extent,
-                Solidity,
-                roundness,
-                Compactness,
-                ShapeFactor1,
-                ShapeFactor2,
-                ShapeFactor3,
-                ShapeFactor4,
+                Area: document.getElementById('Area').value,
+                Perimeter: document.getElementById('Perimeter').value,
+                MajorAxisLength: document.getElementById('MajorAxisLength').value,
+                MinorAxisLength: document.getElementById('MinorAxisLength').value,
+                AspectRation: document.getElementById('AspectRation').value,
+                Eccentricity: document.getElementById('Eccentricity').value,
+                ConvexArea: document.getElementById('ConvexArea').value,
+                EquivDiameter: document.getElementById('EquivDiameter').value,
+                Extent: document.getElementById('Extent').value,
+                Solidity: document.getElementById('Solidity').value,
+                roundness: document.getElementById('roundness').value,
+                Compactness: document.getElementById('Compactness').value,
+                ShapeFactor1: document.getElementById('ShapeFactor1').value,
+                ShapeFactor2: document.getElementById('ShapeFactor2').value,
+                ShapeFactor3: document.getElementById('ShapeFactor3').value,
+                ShapeFactor4: document.getElementById('ShapeFactor4').value,
             };
 
-            // document.getElementById('image').src = ""
-
-            const url = "https://ct312-project.onrender.com"
-            fetch(url + '/predict', {   
+            // const url = "https://ct312-project.onrender.com";
+            const url = "http://127.0.0.1:5000";
+            fetch(url + '/predict', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             })
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('result').innerHTML = 'Kết quả dự đoán: ' + data.result;
-                    document.getElementById('image').src = images[data.result]
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                }).finally(() => {
-                    predictBtn.disabled = false;
-                })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = 'Kết quả dự đoán: ' + data.result;
+            })
+            .catch(error => console.error('Error:', error))
+            .finally(() => predictBtn.disabled = false);
         }
     </script>
 </body>
