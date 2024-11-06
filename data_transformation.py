@@ -42,7 +42,7 @@ def detect_outliers_iqr(data, column,factor):
 
 data_without_last_column = data.iloc[:, :-1]
 
-smote = SMOTE(sampling_strategy='auto', k_neighbors=1, random_state=42)
+smote = SMOTE(sampling_strategy='auto', k_neighbors=14, random_state=42)
 
 x_resampled, y_resampled = smote.fit_resample(data_without_last_column, data['Class'])
 data = pd.concat([x_resampled, y_resampled], axis=1)
