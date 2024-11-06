@@ -11,9 +11,7 @@ scaler = joblib.load('scaler.pkl')
 
 # SERVER
 app = Flask(__name__)
-cors = CORS(app, resources={
-    r"/*": {"origins": "*"}
-})
+CORS(app, resources={r"/predict": {"origins": "*", "methods": ["GET", "POST"]}})
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -38,7 +36,6 @@ def predict():
     result = prediction[0]
 
     return jsonify({'result': result})
-
 
 @app.route('/')
 def hello_world():
