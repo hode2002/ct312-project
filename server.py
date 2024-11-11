@@ -1,39 +1,42 @@
 import pandas as pd
-import numpy as np
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import joblib
 
 model = joblib.load('model.pkl')
-scaler = joblib.load('scaler.pkl')
 
 """### FLASK APP"""
 
 # SERVER
 app = Flask(__name__)
-CORS(app, resources={r"/predict": {"origins": "*", "methods": ["GET", "POST"]}})
+CORS(app, resources={r"/predict": {"origins": "*"}})
+
+from flask import Flask, request, jsonify
+import pandas as pd
 
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.json
+    print('data', data)
     required_fields = [
         'Area', 'Perimeter', 'MajorAxisLength', 'MinorAxisLength', 'AspectRation',
-        'Eccentricity', 'ConvexArea', 'EquivDiameter', 'Extent', 'Solidity',
-        'roundness', 'Compactness', 'ShapeFactor1', 'ShapeFactor2', 'ShapeFactor3', 'ShapeFactor4'
+        'Eccentricity', 'Extent', 'Solidity', 'roundness', 'Compactness', 
+        'ShapeFactor1', 'ShapeFactor2', 'ShapeFactor4'
     ]
 
     if not all(field in data for field in required_fields):
-        return jsonify({'error': 'Invalid input data'}), 400
-    
+        return jsonify({'error': 'Invalid input data, missing required fields'}), 400
+
     input_data = [[data[field] for field in required_fields]]
     input_df = pd.DataFrame(input_data, columns=required_fields)
-    
+
     input_df = input_df.replace(',', '.', regex=True).astype(float)
 
-    scaled_data = scaler.transform(input_df)
-
-    prediction = model.predict(scaled_data)
-    result = prediction[0]
+    try:
+        prediction = model.predict(input_df)
+        result = prediction[0]
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
     return jsonify({'result': result})
 

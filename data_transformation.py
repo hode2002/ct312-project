@@ -1,6 +1,8 @@
 import pandas as pd
+import numpy as np
 from imblearn.over_sampling import SMOTE
 from sklearn.preprocessing import MinMaxScaler
+import re
 
 """### ĐỌC DỮ LIỆU"""
 
@@ -11,60 +13,46 @@ data = pd.DataFrame(pd.read_excel(data_path, sheet_name='Dry_Beans_Dataset'))
 data = data.drop('ShapeFactor5', axis=1)
 data = data.drop('Name', axis=1)
 
-"""### KIỂM TRA VÀ XÓA DỮ LIỆU NULL"""
-data = data.dropna()
+### KIỂM TRA VÀ XỬ LÝ DỮ LIỆU BỊ NULL
+data_x = data.drop('Class', axis=1)
+data_y = data['Class']
+
+def is_invalid(value):
+    if isinstance(value, str) and re.search(r'[^\d\.]', value):
+        return True
+    return False
+
+for column in data_x:
+    data_x[column] = data_x[column].where(~data_x[column].apply(is_invalid), np.nan)
+data_x = data_x.apply(pd.to_numeric, errors='coerce')
+data_x.fillna(data_x.mean(), inplace=True)
+data = pd.concat([data_x, data_y], axis=1)
 
 """### XỬ LÝ VÀ XÓA DỮ LIỆU KHÔNG NHẤT QUÁN"""
 classList = ["SEKER", "BARBUNYA", "BOMBAY", "CALI", "DERMASON", "HOROZ", "SIRA"]
 data = data.loc[data['Class'].isin(classList)]
 
-data = data.replace(',', '.', regex=True)
-scaler = MinMaxScaler()
-numeric_columns = [
-    'Area', 'Perimeter', 'MajorAxisLength', 'MinorAxisLength',
-    'AspectRation', 'Eccentricity', 'ConvexArea', 'EquivDiameter',
-    'Extent', 'Solidity', 'roundness', 'Compactness',
-    'ShapeFactor1', 'ShapeFactor2', 'ShapeFactor3', 'ShapeFactor4'
-]
+### XỬ LÝ DỮ LIỆU BỊ NHIỄU (NGOẠI LAI)
+def remove_outliers(df):
+    for col in df.columns:
+        if col != 'Class':
+            q25 = np.percentile(df[col] , 25)
+            q75 = np.percentile(df[col] , 75)
+            iqr = q75 - q25
+            cut_off = iqr * 1.5
+            lo = q25 - cut_off
+            up = q75 + cut_off
+            df[col] = df[col].clip(upper = up)
+            df[col] = df[col].clip(lower=lo)
 
-data[numeric_columns] = scaler.fit_transform(data[numeric_columns])
+remove_outliers(data)
 
-def detect_outliers_iqr(data, column,factor):
-    Q1 = data[column].quantile(0.25)
-    Q3 = data[column].quantile(0.75)
-    IQR = Q3 - Q1
-    lower_bound = Q1 - factor * IQR
-    upper_bound = Q3 + factor * IQR
+###CÂN BẰNG DỮ LIỆU
+X = data.drop('Class', axis=1)
+y = data['Class']
 
-    filtered_data = data[(data[column] >= lower_bound) & (data[column] <= upper_bound)]
-    
-    return filtered_data
+smote = SMOTE(random_state=42)
+x_smote, y_smote = smote.fit_resample(X, y)
 
-data_without_last_column = data.iloc[:, :-1]
-
-smote = SMOTE(sampling_strategy='auto', k_neighbors=14, random_state=42)
-
-x_resampled, y_resampled = smote.fit_resample(data_without_last_column, data['Class'])
-data = pd.concat([x_resampled, y_resampled], axis=1)
-
-# Bắt đầu với cột liên quan đến hình dạng và kích thước
-data = detect_outliers_iqr(data,'Eccentricity', 0.9)
-data = detect_outliers_iqr(data,'Solidity', 0.9)
-data = detect_outliers_iqr(data,'roundness', 0.9)
-
-# Tiếp theo là các cột kích thước
-data = detect_outliers_iqr(data,'Area', 1.25)
-data = detect_outliers_iqr(data,'MajorAxisLength', 1.25)
-data = detect_outliers_iqr(data,'ConvexArea', 1.25)
-data = detect_outliers_iqr(data,'Perimeter', 1)
-data = detect_outliers_iqr(data,'MinorAxisLength', 1)
-
-# Cuối cùng xử lý các Shape Factors
-data = detect_outliers_iqr(data,'ShapeFactor4', 1.25)
-data = detect_outliers_iqr(data,'ShapeFactor1', 0.9)
-data = detect_outliers_iqr(data,'ShapeFactor2', 0.9)
-data = detect_outliers_iqr(data,'ShapeFactor3', 0.9)
-
-# Cuối cùng là Aspect Ratio
-data = detect_outliers_iqr(data,'AspectRation', 1)
-data = detect_outliers_iqr(data, 'Extent',1)
+###XÓA BỎ CÁC ĐẶC TRƯNG BẤT THƯỜNG
+x_smote.drop(['ConvexArea', 'EquivDiameter','ShapeFactor3'], axis=1, inplace=True)

@@ -165,25 +165,13 @@
             <input type="text" value="0,549812187" id="Eccentricity" />
           </div>
         </div>
-
+        
         <div class="input-row">
-          <div>
-            <label for="ConvexArea">ConvexArea</label>
-            <input type="text" value="28715" id="ConvexArea" />
-          </div>
-
-          <div>
-            <label for="EquivDiameter">EquivDiameter</label>
-            <input type="text" value="190,1410973" id="EquivDiameter" />
-          </div>
-
           <div>
             <label for="Extent">Extent</label>
             <input type="text" value="0,763922518" id="Extent" />
           </div>
-        </div>
 
-        <div class="input-row">
           <div>
             <label for="Solidity">Solidity</label>
             <input type="text" value="0,988855999" id="Solidity" />
@@ -194,13 +182,14 @@
             <input type="text" value="0,958027126" id="roundness" />
           </div>
 
+        </div>
+        
+        <div class="input-row">
           <div>
             <label for="Compactness">Compactness</label>
             <input type="text" value="0,913357755" id="Compactness" />
           </div>
-        </div>
 
-        <div class="input-row">
           <div>
             <label for="ShapeFactor1">ShapeFactor1</label>
             <input type="text" value="0,007331506" id="ShapeFactor1" />
@@ -209,11 +198,6 @@
           <div>
             <label for="ShapeFactor2">ShapeFactor2</label>
             <input type="text" value="0,003147289" id="ShapeFactor2" />
-          </div>
-
-          <div>
-            <label for="ShapeFactor3">ShapeFactor3</label>
-            <input type="text" value="0,834222388" id="ShapeFactor3" />
           </div>
         </div>
 
@@ -229,13 +213,11 @@
         <div id="result">
           <h2 id="predictionText"></h2>
           <div style="display: flex; justify-content: center;">
-            <img id="resultImage" src="" alt="" style="display: none; margin-top: 10px; max-width: 100%; height: auto" />
+            <img id="resultImage" src="" alt="" style="display: none; margin-top: 10px; max-width: 100%; height: 254px;" />
           </div>
         </div>
       </form>
     </div>
-
-    <!-- <h2 id="result" class="body h-10vh"></h2> -->
 
     <script>
       const images = {
@@ -258,19 +240,17 @@
           MinorAxisLength: document.getElementById('MinorAxisLength').value,
           AspectRation: document.getElementById('AspectRation').value,
           Eccentricity: document.getElementById('Eccentricity').value,
-          ConvexArea: document.getElementById('ConvexArea').value,
-          EquivDiameter: document.getElementById('EquivDiameter').value,
           Extent: document.getElementById('Extent').value,
           Solidity: document.getElementById('Solidity').value,
           roundness: document.getElementById('roundness').value,
           Compactness: document.getElementById('Compactness').value,
           ShapeFactor1: document.getElementById('ShapeFactor1').value,
           ShapeFactor2: document.getElementById('ShapeFactor2').value,
-          ShapeFactor3: document.getElementById('ShapeFactor3').value,
           ShapeFactor4: document.getElementById('ShapeFactor4').value
         }
 
-        const url = 'https://ct312-project.onrender.com'
+        // const url = 'https://ct312-project.onrender.com'
+        const url = 'http://127.0.0.1:5000'
         fetch(url + '/predict', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
